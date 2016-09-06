@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -9,23 +8,31 @@ public class ATM
 {
     private Scanner input = new Scanner(System.in);
     private String entry;
-    public ArrayList<Account> accountNumbers = new ArrayList<Account>();
+    private Account currentAct = new Account();
 
     public void startATM()
     {
-        System.out.print("Welcome to the Bank of Andrew. \nEnter \"y\" to create a new account.\n> ");
-        entry = input.next();
+        boolean validEntry = false;
 
-        if(entry.equals("y"))
-        {
-            createAccount();
-        }
-    }
+        do {
 
-    public void createAccount()
-    {
-        Account currentAct = new Account();
-        currentAct.setNumAndPas();
-        accountNumbers.add(currentAct);
+            System.out.print("Welcome to the Bank of Andrew. \nEnter \"n\" to create a new account or \"e\" to login with " +
+                    "an existing account.\n> ");
+            entry = input.next();
+
+            if (entry.equals("n"))
+            {
+                currentAct.createAccount();
+                currentAct.validateLogin();
+                validEntry = true;
+            } else if (entry.equals("e")) {
+                currentAct.validateLogin();
+                validEntry = true;
+            } else
+            {
+                System.out.println("Invalid entry. Enter \"n\" to create a new account or \"e\" to login with with " +
+                        "an existing account.");
+            }
+        } while(!validEntry);
     }
 }
