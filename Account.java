@@ -1,16 +1,23 @@
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Created by andre on 9/5/2016.
  */
 
+// This class serves as an account with both a checking and savings account.
+
 public class Account implements Serializable
 {
     private Scanner input = new Scanner(System.in);
     private int accountNumber, pin, entryInt;
-    private String nameFirst, nameLast;
+    private String entryString, nameFirst, nameLast;
+    private Random random = new Random();
+    private BigDecimal checkingBalance, amount, displayCheckingBalance;
 
     public ArrayList<Account> accountNumbers = new ArrayList<Account>();
 
@@ -35,14 +42,14 @@ public class Account implements Serializable
 
     public void setNumAndPin()
     {
-        System.out.print("Account number:\n> ");
-        accountNumber = input.nextInt();
+        accountNumber = random.nextInt(5000) + 1;
+        System.out.println("Your account number is " + accountNumber);
 
         System.out.print("Password:\n> ");
         pin = input.nextInt();
     }
 
-    public void validateLogin() // uses do-while loops to verify submitted account and pin
+    public boolean validateLogin() // uses do-while loops to verify submitted account and pin
     {
         boolean acctFound = false;
         boolean pinCorrect = false;
@@ -79,5 +86,26 @@ public class Account implements Serializable
         } while (!acctFound);
 
         System.out.println("Welcome, " + nameFirst + " " + nameLast + "!");
+        return acctFound;
+    }
+
+    public boolean isAccountNumbersEmpty()
+    {
+        return accountNumbers.size() == 0;
+    }
+
+    public void setCheckingBalance()
+    {
+        amount = new BigDecimal("100.815");
+        checkingBalance = amount;
+        displayCheckingBalance = amount.setScale(2, RoundingMode.HALF_UP);
+        System.out.println("Your checking balance is $" + displayCheckingBalance + ".");
+    }
+
+    public void withdrawFromChecking()
+    {
+        amount = amount.subtract(new BigDecimal("37.42"));
+        displayCheckingBalance = amount.setScale(2, RoundingMode.HALF_UP);
+        System.out.println("Withdrawal successful. Your new balance is " + displayCheckingBalance + ".");
     }
 }
