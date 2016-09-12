@@ -8,6 +8,7 @@ public class ATM
 {
     private Scanner input = new Scanner(System.in);
     private String entryString;
+    private int entryInt;
     private Account currentAcct = new Account();
     private CheckingAccount currentCheckingAcct = new CheckingAccount();
     private SavingsAccount currentSavingsAcct = new SavingsAccount();
@@ -41,13 +42,13 @@ public class ATM
                     currentCheckingAcct.validateLogin();
                     loginScreen(currentCheckingAcct);
                 }
-                if (entryString.equals("s"))
+                else if (entryString.equals("s"))
                 {
                     currentSavingsAcct.createAccount();
                     currentSavingsAcct.validateLogin();
                     loginScreen(currentSavingsAcct);
                 }
-                if (entryString.equals("b"))
+                else if (entryString.equals("b"))
                 {
                     currentAcct.createAccount();
                     currentAcct.validateLogin();
@@ -66,8 +67,36 @@ public class ATM
         }
     }
 
-    public void loginScreen(Account acct)
+    private void loginScreen(Account acct)
     {
+        boolean loggedIn = true;
 
+        System.out.println("\nWelcome, " + acct.getFullName() + "! ");
+
+        do {
+            System.out.print("What would you like to do?\n\t1) Get balance\n\t2) Deposit\n\t3) Withdraw\n\t" +
+                    "4) Transfer\n\t5) Logout\n\t> ");
+            entryInt = input.nextInt();
+            System.out.println("");
+
+            if (entryInt == 1) // user chooses "View balance"
+            {
+                acct.getBalance();
+            } else if (entryInt == 2) // user chooses "Deposit"
+            {
+                acct.deposit();
+            } else if (entryInt == 3) // user chooses "Withdraw"
+            {
+                System.out.println("Withdraw functionality not yet available.");
+            } else if (entryInt == 4) // user chooses "Transfer"
+            {
+                System.out.println("Transfer functionality not yet available.");
+            } else if (entryInt == 5) // user chooses "Logout"
+            {
+                loggedIn = false;
+            }
+        } while (loggedIn);
+
+        System.out.println("You have been successfully logged out.");
     }
 }

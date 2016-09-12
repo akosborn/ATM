@@ -1,6 +1,4 @@
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,11 +11,12 @@ import java.util.Scanner;
 
 public class Account implements Serializable
 {
-    private Scanner input = new Scanner(System.in);
+    protected Scanner input = new Scanner(System.in);
     private int accountNumber, pin, entryInt;
-    private String entryString, nameFirst, nameLast;
+    protected String entryString, nameFirst, nameLast, fullName;
     private Random random = new Random();
-    private BigDecimal checkingBalance, amount, displayCheckingBalance;
+    protected final static double initialBalance = 0.00;
+    protected double checkingBalance = initialBalance, savingsBalance = initialBalance;
 
     public ArrayList<Account> accountNumbers = new ArrayList<Account>();
 
@@ -31,28 +30,35 @@ public class Account implements Serializable
                 "will now be required to sign in with your new login information.\n");
     }
 
-    public void setName() // associates first and last name with new user's account
+    private void setName() // associates first and last name with new user's account
     {
-        System.out.print("First name:\n> ");
+        System.out.print("First name: \n> ");
         nameFirst = input.next();
 
-        System.out.print("Last name:\n> ");
+        System.out.print("Last name: \n> ");
         nameLast = input.next();
+
+        fullName = nameFirst + " " + nameLast;
     }
 
-    public void setNumAndPin()
+    public String getFullName()
+    {
+        return fullName;
+    }
+
+    private void setNumAndPin()
     {
         accountNumber = random.nextInt(5000) + 1;
         System.out.println("Your account number is " + accountNumber);
 
-        System.out.print("Password:\n> ");
+        System.out.print("Password: \n> ");
         pin = input.nextInt();
     }
 
     public boolean validateLogin() // uses do-while loops to verify submitted account and pin
     {
         boolean acctFound = false;
-        boolean pinCorrect = false;
+        boolean pinMatches = false;
 
         do  // requests account number until a valid account is entered
         {
@@ -71,12 +77,12 @@ public class Account implements Serializable
                         entryInt = input.nextInt();
                         if (entryInt == (i.pin))
                         {
-                            pinCorrect = true;
+                            pinMatches = true;
                         }else
                         {
                             System.out.println("Invalid password. Please try again.");
                         }
-                    } while (!pinCorrect);
+                    } while (!pinMatches);
 
                 } else
                 {
@@ -85,7 +91,6 @@ public class Account implements Serializable
             }
         } while (!acctFound);
 
-        System.out.println("Welcome, " + nameFirst + " " + nameLast + "!");
         return acctFound;
     }
 
@@ -94,18 +99,45 @@ public class Account implements Serializable
         return accountNumbers.size() == 0;
     }
 
-    public void setCheckingBalance()
+    public void getBalance()
     {
-        amount = new BigDecimal("100.815");
-        checkingBalance = amount;
-        displayCheckingBalance = amount.setScale(2, RoundingMode.HALF_UP);
-        System.out.println("Your checking balance is $" + displayCheckingBalance + ".");
+        System.out.println("Your savings balance is $" + savingsBalance + ".");
+        System.out.println("Your checking balance is $" + checkingBalance + ".\n");
     }
 
-    public void withdrawFromChecking()
+    public void deposit()
     {
-        amount = amount.subtract(new BigDecimal("37.42"));
-        displayCheckingBalance = amount.setScale(2, RoundingMode.HALF_UP);
-        System.out.println("Withdrawal successful. Your new balance is " + displayCheckingBalance + ".");
+        double depositAmount = 0;
+
+        System.out.print("Deposit to checking (c) or savings (s)?\n> ");
+        entryString = input.next();
+        while (!entryString.equals("c") && !entryString.equals("s"))
+        {
+            System.out.println("Invalid entry. Enter \"c\" to deposit to checking or \"s\" to deposit to savings");
+            entryString = input.next();
+        }
+
+        if (entryString.equals("c")) // if user chooses to deposit to checking
+        {
+            while (depositAmount != 20 && depositAmount != 40 && depositAmount != 60 && depositAmount != 80 && depositAmount != 100)
+            {
+                System.out.print("Choose an amount to deposit.\n\t$20\n\t$40\n\t$60\n\t$80\n\t$100\n>$");
+                depositAmount = input.nextInt();
+            }
+
+            checkingBalance += depositAmount;
+            System.out.println("Your new checking balance is $" + checkingBalance + ".\n");
+
+        } else if (entryString.equals("s")) // if user chooses to deposit to savings
+        {
+            while (depositAmount != 20 && depositAmount != 40 && depositAmount != 60 && depositAmount != 80 && depositAmount != 100)
+            {
+                System.out.print("Choose an amount to deposit.\n\t$20\n\t$40\n\t$60\n\t$80\n\t$100\n>$");
+                depositAmount = input.nextInt();
+            }
+
+            savingsBalance += depositAmount;
+            System.out.println("Your new savings balance is $" + savingsBalance + ".\n");
+        }
     }
 }
