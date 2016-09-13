@@ -9,12 +9,13 @@ public class ATM
     private Scanner input = new Scanner(System.in);
     private String entryString;
     private int entryInt;
-    private CheckingAccount currentCheckingAcct;
-    private SavingsAccount currentSavingsAcct;
-    private savingsAndCheckingAccount currentSavingsAndCheckingAcct;
 
     public void startATM()
     {
+        CheckingAccount currentCheckingAcct;
+        SavingsAccount currentSavingsAcct;
+        savingsAndCheckingAccount currentSavingsAndCheckingAcct;
+
         while(true)
         {
             boolean validEntry = false;
@@ -38,24 +39,18 @@ public class ATM
                     entryString = input.next();
                     if (entryString.equals("c"))
                     {
-                        currentCheckingAcct = new CheckingAccount();
-                        currentCheckingAcct.createAccount();
-                        currentCheckingAcct.validateLogin();
-                        loginScreen(currentCheckingAcct);
+                        currentCheckingAcct = new CheckingAccount();;
+                        loginMenu(currentCheckingAcct);
                     } else if (entryString.equals("s")) {
                         currentSavingsAcct = new SavingsAccount();
-                        currentSavingsAcct.createAccount();
-                        currentSavingsAcct.validateLogin();
-                        loginScreen(currentSavingsAcct);
+                        loginMenu(currentSavingsAcct);
                     } else if (entryString.equals("b")) {
                         currentSavingsAndCheckingAcct = new savingsAndCheckingAccount();
-                        currentSavingsAndCheckingAcct.createAccount();
-                        currentSavingsAndCheckingAcct.validateLogin();
-                        loginScreen(currentSavingsAndCheckingAcct);
+                        loginMenu(currentSavingsAndCheckingAcct);
                     }
                     validEntry = true;
                 } else if (entryString.equals("e")) {
-                    loginScreen(new Account().validateLogin());
+                    loginMenu(Account.validateLogin());
                     validEntry = true;
                 } else {
                     System.out.println("Invalid entry. Enter \"n\" to create a new account or \"e\" to login with with " +
@@ -65,7 +60,7 @@ public class ATM
         }
     }
 
-    private void loginScreen(Account acct)
+    private void loginMenu(Account acct)
     {
         boolean loggedIn = true;
 
