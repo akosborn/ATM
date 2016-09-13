@@ -9,60 +9,58 @@ public class ATM
     private Scanner input = new Scanner(System.in);
     private String entryString;
     private int entryInt;
-    private Account currentAcct = new Account();
-    private CheckingAccount currentCheckingAcct = new CheckingAccount();
-    private SavingsAccount currentSavingsAcct = new SavingsAccount();
+    private CheckingAccount currentCheckingAcct;
+    private SavingsAccount currentSavingsAcct;
+    private savingsAndCheckingAccount currentSavingsAndCheckingAcct;
 
     public void startATM()
     {
-        boolean validEntry = false;
-
-        System.out.println("Welcome to the Bank of Andrew.");
-
-        if (currentAcct.isAccountNumbersEmpty())
+        while(true)
         {
-            System.out.print("Enter \"n\" to create a new account. \n> ");
-        } else
-        {
-            System.out.print("Enter \"n\" to create a new account or \"e\" to login with " +
-                    "an existing account. \n> ");
-        }
+            boolean validEntry = false;
 
-        while(!validEntry)
-        {
-            entryString = input.next();
+            System.out.println("Welcome to the Bank of Andrew.");
 
-            if (entryString.equals("n"))
+            if ( (Account.accountNumbers).isEmpty() )
             {
-                System.out.print("Enter \"c\" for a checking account, \"s\" for a savings account, or \"b\" for both. \n> ");
-                entryString = input.next();
-                if (entryString.equals("c"))
-                {
-                    currentCheckingAcct.createAccount();
-                    currentCheckingAcct.validateLogin();
-                    loginScreen(currentCheckingAcct);
-                }
-                else if (entryString.equals("s"))
-                {
-                    currentSavingsAcct.createAccount();
-                    currentSavingsAcct.validateLogin();
-                    loginScreen(currentSavingsAcct);
-                }
-                else if (entryString.equals("b"))
-                {
-                    currentAcct.createAccount();
-                    currentAcct.validateLogin();
-                    loginScreen(currentAcct);
-                }
-                validEntry = true;
-            } else if (entryString.equals("e"))
-            {
-                currentAcct.validateLogin();
-                validEntry = true;
-            } else
-            {
-                System.out.println("Invalid entry. Enter \"n\" to create a new account or \"e\" to login with with " +
+                System.out.print("Enter \"n\" to create a new account. \n> ");
+            } else {
+                System.out.print("Enter \"n\" to create a new account or \"e\" to login with " +
                         "an existing account. \n> ");
+            }
+
+            while (!validEntry) {
+                entryString = input.next();
+
+                if ( entryString.equals("n") )
+                {
+                    System.out.print("Enter \"c\" for a checking account, \"s\" for a savings account, or \"b\" for both. \n> ");
+                    entryString = input.next();
+                    if (entryString.equals("c"))
+                    {
+                        currentCheckingAcct = new CheckingAccount();
+                        currentCheckingAcct.createAccount();
+                        currentCheckingAcct.validateLogin();
+                        loginScreen(currentCheckingAcct);
+                    } else if (entryString.equals("s")) {
+                        currentSavingsAcct = new SavingsAccount();
+                        currentSavingsAcct.createAccount();
+                        currentSavingsAcct.validateLogin();
+                        loginScreen(currentSavingsAcct);
+                    } else if (entryString.equals("b")) {
+                        currentSavingsAndCheckingAcct = new savingsAndCheckingAccount();
+                        currentSavingsAndCheckingAcct.createAccount();
+                        currentSavingsAndCheckingAcct.validateLogin();
+                        loginScreen(currentSavingsAndCheckingAcct);
+                    }
+                    validEntry = true;
+                } else if (entryString.equals("e")) {
+                    loginScreen(new Account().validateLogin());
+                    validEntry = true;
+                } else {
+                    System.out.println("Invalid entry. Enter \"n\" to create a new account or \"e\" to login with with " +
+                            "an existing account. \n> ");
+                }
             }
         }
     }
@@ -97,6 +95,6 @@ public class ATM
             }
         } while (loggedIn);
 
-        System.out.println("You have been successfully logged out.");
+        System.out.println("You have been successfully logged out.\n");
     }
 }
