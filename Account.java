@@ -18,7 +18,7 @@ public class Account implements Serializable
     private Random random = new Random();
     protected final static double initialBalance = 0.00;
     protected double checkingBalance = initialBalance, savingsBalance = initialBalance;
-    public static ArrayList<Account> accountNumbers = new ArrayList<>();
+    public static ArrayList<Account> accountNumbers = new ArrayList<Account>();
 
     public void createAccount() // sets acctNumber and pin and adds account to ArrayList<Account> accountNumbers
     {
