@@ -6,6 +6,8 @@
 
 public class SavingsAccount extends Account
 {
+    private double savingsBalance;
+
     @Override
     public void getBalance()
     {
