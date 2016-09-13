@@ -1,8 +1,11 @@
 /**
  * Created by andre on 9/12/2016.
  */
+
 public class savingsAndCheckingAccount extends Account
 {
+    private double checkingBalance = INITIAL_BALANCE, savingsBalance = INITIAL_BALANCE;
+
     @Override
     public void getBalance()
     {
@@ -13,6 +16,7 @@ public class savingsAndCheckingAccount extends Account
     @Override
     public void deposit()
     {
+        String entryString;
         double depositAmount = 0;
 
         System.out.print("Deposit to checking (c) or savings (s)?\n> ");
