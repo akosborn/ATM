@@ -12,6 +12,16 @@ public class ATM
         SavingsAccount currentSavingsAcct;
         savingsAndCheckingAccount currentSavingsAndCheckingAcct;
 
+        // loads accounts.ser if user chooses yes
+        System.out.print("Load accounts.ser? (y or n)\n> ");
+        entryString = input.next();
+        System.out.println("");
+
+        if (entryString.equals("y"))
+        {
+            Account.loadAccounts();
+        }
+
         while (true)
         {
             boolean validEntry = false;
