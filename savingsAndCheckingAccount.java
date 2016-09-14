@@ -1,7 +1,3 @@
-/**
- * Created by andre on 9/12/2016.
- */
-
 public class savingsAndCheckingAccount extends Account
 {
     private double checkingBalance = INITIAL_BALANCE, savingsBalance = INITIAL_BALANCE;
@@ -49,5 +45,30 @@ public class savingsAndCheckingAccount extends Account
             savingsBalance += depositAmount;
             System.out.println("Your new savings balance is $" + savingsBalance + ".\n");
         }
+    }
+
+    public void transfer()
+    {
+        String entryString;
+        int entryInt;
+
+        System.out.println("Transfer options:\n\t1) Checking to Savings\n\t2) Savings to Checking");
+        entryString = input.next();
+
+        System.out.println("Amount to withdraw:\n\t$20\n\t$40\n\t$60\n\t$80\n\t$100");
+        entryInt = input.nextInt();
+
+        if ( entryString.equals("1") )
+        {
+            checkingBalance -= entryInt;
+            savingsBalance += entryInt;
+        } else if ( entryString.equals("2") )
+        {
+            savingsBalance -= entryInt;
+            checkingBalance += entryInt;
+        }
+
+        System.out.println("Transfer complete.");
+        getBalance();
     }
 }

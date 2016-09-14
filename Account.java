@@ -4,10 +4,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * Created by andre on 9/5/2016.
- */
-
 // This class serves as an account with both a checking and savings account.
 
 public class Account implements Serializable
