@@ -82,7 +82,7 @@ public class savingsAndCheckingAccount extends Account
         entryString = input.next();
         while (!entryString.equals("c") && !entryString.equals("s"))
         {
-            System.out.println("Invalid entry. Enter \"c\" to deposit to checking or \"s\" to deposit to savings");
+            System.out.println("Invalid entry. Enter \"c\" to withdraw from checking or \"s\" to withdraw from savings");
             entryString = input.next();
         }
 
