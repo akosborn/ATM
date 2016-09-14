@@ -1,9 +1,5 @@
 import java.util.Scanner;
 
-/**
- * Created by andre on 9/5/2016.
- */
-
 public class ATM
 {
     private Scanner input = new Scanner(System.in);
@@ -16,7 +12,7 @@ public class ATM
         SavingsAccount currentSavingsAcct;
         savingsAndCheckingAccount currentSavingsAndCheckingAcct;
 
-        while(true)
+        while (true)
         {
             boolean validEntry = false;
 
@@ -81,12 +77,15 @@ public class ATM
             } else if (entryInt == 3) // user chooses "Withdraw"
             {
                 System.out.println("Withdraw functionality not yet available.");
-            } else if (entryInt == 4) // user chooses "Transfer"
+            } else if (entryInt == 4 && acct instanceof savingsAndCheckingAccount) // savingsAndCheckingAccount user chooses "Transfer"
             {
-                System.out.println("Transfer functionality not yet available.");
+                ( (savingsAndCheckingAccount) acct ).transfer();
             } else if (entryInt == 5) // user chooses "Logout"
             {
                 loggedIn = false;
+            } else
+            {
+                System.out.println("Invalid entry.");
             }
         } while (loggedIn);
 
