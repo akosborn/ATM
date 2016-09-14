@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Account implements Serializable
 {
-    Scanner input = new Scanner(System.in);
+    static Scanner input = new Scanner(System.in);
     private int accountNumber, pin;
     private String nameFirst, fullName;
     private Random random = new Random();
