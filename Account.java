@@ -1,3 +1,6 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,17 @@ public class Account implements Serializable
         System.out.println("\nThank you, " + nameFirst + ". Your account (#" + this.accountNumber + ") has been created.\nYou " +
                 "will now be required to sign in with your new login information.\n");
         validateLogin();
+    }
+
+    public static void saveAccounts()
+    {
+        try
+        {
+            FileOutputStream fs = new FileOutputStream("accounts.ser");
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(accounts);
+            os.close();
+        } catch (IOException ex) { ex.printStackTrace(); }
     }
 
     public static boolean isListEmpty()
