@@ -76,7 +76,7 @@ public class ATM
                 acct.deposit();
             } else if (entryInt == 3) // user chooses "Withdraw"
             {
-                System.out.println("Withdraw functionality not yet available.");
+                acct.withdraw();
             } else if (entryInt == 4 && acct instanceof savingsAndCheckingAccount) // savingsAndCheckingAccount user chooses "Transfer"
             {
                 ( (savingsAndCheckingAccount) acct ).transfer();
