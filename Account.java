@@ -105,4 +105,9 @@ public class Account implements Serializable
     {
         // deposit money
     }
+
+    public void withdraw()
+    {
+        // withdraw money
+    }
 }
