@@ -22,7 +22,7 @@ public class ATM
 
             System.out.println("Welcome to the Bank of Andrew.");
 
-            if ( (Account.accountNumbers).isEmpty() )
+            if (Account.isListEmpty())
             {
                 System.out.print("Enter \"n\" to create a new account. \n> ");
             } else {
