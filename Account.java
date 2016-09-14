@@ -1,7 +1,4 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +8,7 @@ import java.util.Scanner;
 
 public class Account implements Serializable
 {
+    private static final long serialVersionUID = -2491448891466958321L;
     static Scanner input = new Scanner(System.in);
     private int accountNumber, pin;
     private String nameFirst, fullName;
@@ -40,6 +38,20 @@ public class Account implements Serializable
             os.writeObject(accounts);
             os.close();
         } catch (IOException ex) { ex.printStackTrace(); }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void loadAccounts()
+    {
+        try
+        {
+            FileInputStream fs = new FileInputStream("accounts.ser");
+            ObjectInputStream os = new ObjectInputStream(fs);
+
+            Object one = os.readObject();
+            accounts = (List<Account>) one;
+            System.out.println(accounts + "\n");
+        } catch (IOException | ClassNotFoundException ex) { ex.printStackTrace(); }
     }
 
     public static boolean isListEmpty()
@@ -123,5 +135,11 @@ public class Account implements Serializable
     public void withdraw()
     {
         // withdraw money
+    }
+
+    @Override
+    public String toString()
+    {
+        return "(ACCT: " + accountNumber + ", PIN: " + pin + ")";
     }
 }
