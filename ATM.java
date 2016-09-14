@@ -82,6 +82,7 @@ public class ATM
                 ( (savingsAndCheckingAccount) acct ).transfer();
             } else if (entryInt == 5) // user chooses "Logout"
             {
+                Account.saveAccounts();
                 loggedIn = false;
             } else
             {
