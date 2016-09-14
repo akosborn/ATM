@@ -13,15 +13,15 @@ public class Account implements Serializable
     private String nameFirst, fullName;
     private Random random = new Random();
     final static double INITIAL_BALANCE = 0;
-    private static List<Account> accountNumbers = new ArrayList<>();
+    private static List<Account> accounts = new ArrayList<>();
 
-    public Account() // sets acctNumber and pin and adds account to ArrayList<Account> accountNumbers
+    public Account() // sets acctNumber and pin and adds account to ArrayList<Account> accounts
     {
         System.out.println("\nTo create your account, you must complete the following fields.");
         setName();
         setNumAndPin();
-        accountNumbers.add(this);
-        System.out.println(accountNumbers);
+        accounts.add(this);
+        System.out.println(accounts);
 
         System.out.println("\nThank you, " + nameFirst + ". Your account (#" + this.accountNumber + ") has been created.\nYou " +
                 "will now be required to sign in with your new login information.\n");
@@ -30,7 +30,7 @@ public class Account implements Serializable
 
     public static boolean isListEmpty()
     {
-        return accountNumbers.isEmpty();
+        return accounts.isEmpty();
     }
 
     private void setName() // associates first and last name with new user's account
@@ -60,7 +60,7 @@ public class Account implements Serializable
         pin = input.nextInt();
     }
 
-    static Account validateLogin() // uses do-while loops to verify submitted account and pin
+    public static Account validateLogin() // uses do-while loops to verify submitted account and pin
     {
         Scanner input = new Scanner(System.in);
         int entryInt;
@@ -73,7 +73,7 @@ public class Account implements Serializable
             System.out.print("Account number: ");
             entryInt = input.nextInt();
 
-            for (Account i : accountNumbers)
+            for (Account i : accounts)
             {
                 if (entryInt == i.accountNumber)
                 {
