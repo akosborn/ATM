@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class Account implements Serializable
     private String nameFirst, fullName;
     private Random random = new Random();
     final static double INITIAL_BALANCE = 0;
-    static ArrayList<Account> accountNumbers = new ArrayList<Account>();
+    private static List<Account> accountNumbers = new ArrayList<>();
 
     public Account() // sets acctNumber and pin and adds account to ArrayList<Account> accountNumbers
     {
@@ -29,6 +30,11 @@ public class Account implements Serializable
         System.out.println("\nThank you, " + nameFirst + ". Your account (#" + this.accountNumber + ") has been created.\nYou " +
                 "will now be required to sign in with your new login information.\n");
         validateLogin();
+    }
+
+    public static boolean isListEmpty()
+    {
+        return accountNumbers.isEmpty();
     }
 
     private void setName() // associates first and last name with new user's account
