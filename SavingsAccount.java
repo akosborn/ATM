@@ -2,10 +2,17 @@
 public class SavingsAccount extends Account
 {
     private double savingsBalance;
+    public String type = "savings";
 
     public SavingsAccount(String nameFirst, String nameLast, int pin)
     {
         super(nameFirst, nameLast, pin);
+    }
+
+    @Override
+    public String getType()
+    {
+        return type;
     }
 
     @Override

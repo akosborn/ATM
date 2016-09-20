@@ -1,10 +1,16 @@
 public class savingsAndCheckingAccount extends Account
 {
     private double checkingBalance = INITIAL_BALANCE, savingsBalance = INITIAL_BALANCE;
+    public String type = "savings and checking";
 
     public savingsAndCheckingAccount(String nameFirst, String nameLast, int pin)
     {
         super(nameFirst, nameLast, pin);
+    }
+
+    public String getType()
+    {
+        return type;
     }
 
     @Override

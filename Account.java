@@ -13,6 +13,7 @@ public abstract class Account implements Serializable
     private Random random = new Random();
     final static double INITIAL_BALANCE = 0;
     private static List<Account> accounts = new ArrayList<>();
+    public String type;
 
     public Account(String nameFirst, String nameLast, int pin)
     {
@@ -122,6 +123,12 @@ public abstract class Account implements Serializable
     public void withdraw()
     {
         // withdraw money
+    }
+
+    public String getType()
+    {
+        // return account type
+        return type;
     }
 
     @Override

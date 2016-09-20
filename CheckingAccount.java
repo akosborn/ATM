@@ -2,10 +2,17 @@
 public class CheckingAccount extends Account
 {
     private double checkingBalance;
+    private String type = "checking";
 
     public CheckingAccount(String nameFirst, String nameLast, int pin)
     {
         super(nameFirst, nameLast, pin);
+    }
+
+    @Override
+    public String getType()
+    {
+        return type;
     }
 
     @Override
