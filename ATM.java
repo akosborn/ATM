@@ -6,13 +6,14 @@ public class ATM
     private String entryString;
     private int entryInt;
 
-    public void startATM()
+    public void initATM()
     {
-        CheckingAccount currentCheckingAcct;
-        SavingsAccount currentSavingsAcct;
-        savingsAndCheckingAccount currentSavingsAndCheckingAcct;
+        loadAccounts();
+        runATM(); // endless menu loop
+    }
 
-        // loads accounts.ser if user chooses yes
+    private void loadAccounts()
+    {
         System.out.print("Load accounts.ser? (y or n)\n> ");
         entryString = input.next();
         System.out.println("");
@@ -21,58 +22,80 @@ public class ATM
         {
             Account.loadAccounts();
         }
+    }
+
+    private void runATM()
+    {
+        boolean validEntry = false;
 
         while (true)
         {
-            boolean validEntry = false;
-
             System.out.println("Welcome to the Bank of Andrew.");
 
             if (Account.isListEmpty())
             {
-                System.out.print("Enter \"n\" to create a new account. \n> ");
-            } else {
-                System.out.print("Enter \"n\" to create a new account or \"e\" to login with " +
+                System.out.print("Enter \"1\" to create a new account. \n> ");
+            }
+            else
+            {
+                System.out.print("Enter \"1\" to create a new account or \"2\" to login with " +
                         "an existing account. \n> ");
             }
 
-            while (!validEntry) {
-                entryString = input.next();
-
-                if ( entryString.equals("n") )
-                {
-                    System.out.print("Enter \"c\" for a checking account, \"s\" for a savings account, or \"b\" for both. \n> ");
-                    entryString = input.next();
-                    if (entryString.equals("c"))
-                    {
-                        currentCheckingAcct = new CheckingAccount();;
-                        loginMenu(currentCheckingAcct);
-                    } else if (entryString.equals("s")) {
-                        currentSavingsAcct = new SavingsAccount();
-                        loginMenu(currentSavingsAcct);
-                    } else if (entryString.equals("b")) {
-                        currentSavingsAndCheckingAcct = new savingsAndCheckingAccount();
-                        loginMenu(currentSavingsAndCheckingAcct);
-                    }
-                    validEntry = true;
-                } else if (entryString.equals("e")) {
-                    loginMenu(Account.validateLogin());
-                    validEntry = true;
-                } else {
-                    System.out.println("Invalid entry. Enter \"n\" to create a new account or \"e\" to login with with " +
-                            "an existing account. \n> ");
-                }
-            }
+            do
+            {
+                validEntry = createOrLogin(validEntry);
+            } while (!validEntry);
         }
     }
 
-    private void loginMenu(Account acct)
+    private boolean createOrLogin(boolean validEntry)
+    {
+        entryString = input.next();
+
+        if ( entryString.equals("1") )
+        {
+            System.out.print("Enter \"1\" for a checking account, \"2\" for a savings account, or \"3\" for both. \n> ");
+            entryString = input.next();
+
+            if (entryString.equals("1"))
+            {
+                CheckingAccount currentCheckingAcct = new CheckingAccount();
+                loggedIn(currentCheckingAcct);
+            }
+            else if (entryString.equals("2"))
+            {
+                SavingsAccount currentSavingsAcct = new SavingsAccount();
+                loggedIn(currentSavingsAcct);
+            }
+            else if (entryString.equals("3"))
+            {
+                savingsAndCheckingAccount currentSavingsAndCheckingAcct = new savingsAndCheckingAccount();
+                loggedIn(currentSavingsAndCheckingAcct);
+            }
+            validEntry = true;
+        }
+        else if (entryString.equals("2"))
+        {
+            loggedIn(Account.validateLogin());
+            validEntry = true;
+        }
+        else
+        {
+            System.out.println("Invalid entry. Enter \"n\" to create a new account or \"e\" to login with with " +
+                    "an existing account. \n> ");
+        }
+        return validEntry;
+    }
+
+    private void loggedIn(Account acct)
     {
         boolean loggedIn = true;
 
         System.out.println("\nWelcome, " + acct.getFullName() + "! ");
 
-        do {
+        do // loops until user logs out
+        {
             System.out.print("What would you like to do?\n\t1) Get balance\n\t2) Deposit\n\t3) Withdraw\n\t" +
                     "4) Transfer\n\t5) Logout\n\t> ");
             entryInt = input.nextInt();
