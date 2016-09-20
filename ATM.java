@@ -53,12 +53,11 @@ public class ATM
     {
         entryString = input.next();
         String nameFirst, nameLast;
-        int pin;
+        int accountNumber, pin;
+        Account currentAcct = null;
 
         if ( entryString.equals("1") )
         {
-            Account currentAcct = null;
-
             System.out.print("Enter \"1\" for a checking account, \"2\" for a savings account, or \"3\" for both. \n> ");
             entryString = input.next();
 
@@ -92,7 +91,17 @@ public class ATM
         }
         else if (entryString.equals("2"))
         {
-            loggedIn(Account.validateLogin());
+            do
+            {
+                System.out.print("Account #: ");
+                accountNumber = input.nextInt();
+                System.out.print("PIN: ");
+                pin = input.nextInt();
+                System.out.println("");
+                currentAcct = Account.validateLogin(accountNumber, pin);
+            } while (currentAcct == null);
+
+            loggedIn(currentAcct);
             validEntry = true;
         }
         else
@@ -134,7 +143,7 @@ public class ATM
                 loggedIn = false;
             } else
             {
-                System.out.println("Invalid entry.");
+                System.out.println("Invalid entry.\n");
             }
         } while (loggedIn);
 
