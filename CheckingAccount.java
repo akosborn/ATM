@@ -3,6 +3,11 @@ public class CheckingAccount extends Account
 {
     private double checkingBalance;
 
+    public CheckingAccount(String nameFirst, String nameLast, int pin)
+    {
+        super(nameFirst, nameLast, pin);
+    }
+
     @Override
     public void getBalance()
     {
