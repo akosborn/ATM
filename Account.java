@@ -9,22 +9,18 @@ public abstract class Account implements Serializable
     private static final long serialVersionUID = -2491448891466958321L;
     static Scanner input = new Scanner(System.in);
     private int accountNumber, pin;
-    private String nameFirst, fullName;
+    private String nameFirst, nameLast, nameFull;
     private Random random = new Random();
     final static double INITIAL_BALANCE = 0;
     private static List<Account> accounts = new ArrayList<>();
 
-    public Account() // sets acctNumber and pin and adds account to ArrayList<Account> accounts
+    public Account(String nameFirst, String nameLast, int pin)
     {
-        System.out.println("\nTo create your account, you must complete the following fields.");
-        setName();
-        setNumAndPin();
+        setNameFirst(nameFirst);
+        setNameLast(nameLast);
+        setAccountNumber();
+        setPin(pin);
         accounts.add(this);
-        System.out.println(accounts);
-
-        System.out.println("\nThank you, " + nameFirst + ". Your account (#" + this.accountNumber + ") has been created.\nYou " +
-                "will now be required to sign in with your new login information.\n");
-        validateLogin();
     }
 
     public static void saveAccounts()
@@ -56,31 +52,39 @@ public abstract class Account implements Serializable
         return accounts.isEmpty();
     }
 
-    private void setName() // associates first and last name with new user's account
+    private void setNameFirst(String nameFirst)
     {
-        String nameLast;
-
-        System.out.print("First name: \n> ");
-        nameFirst = input.next();
-
-        System.out.print("Last name: \n> ");
-        nameLast = input.next();
-
-        fullName = nameFirst + " " + nameLast;
+        this.nameFirst = nameFirst;
     }
 
-    public String getFullName()
+    private void setNameLast(String nameLast)
     {
-        return fullName;
+        this.nameLast = nameLast;
     }
 
-    private void setNumAndPin()
+    public String getNameFirst()
+    {
+        return nameFirst;
+    }
+
+    public String getNameLast()
+    {
+        return nameLast;
+    }
+
+    public int getAccountNumber()
+    {
+        return accountNumber;
+    }
+
+    private void setAccountNumber()
     {
         accountNumber = random.nextInt(5000) + 1;
-        System.out.println("Your account number is " + accountNumber);
+    }
 
-        System.out.print("Password: \n> ");
-        pin = input.nextInt();
+    private void setPin(int pin)
+    {
+        this.pin = pin;
     }
 
     public static Account validateLogin() // uses do-while loops to verify submitted account and pin
@@ -107,6 +111,7 @@ public abstract class Account implements Serializable
                     {
                         System.out.print("Password: ");
                         entryInt = input.nextInt();
+                        System.out.println("");
                         if (entryInt == (i.pin))
                         {
                             pinMatches = true;
