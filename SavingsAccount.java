@@ -3,6 +3,11 @@ public class SavingsAccount extends Account
 {
     private double savingsBalance;
 
+    public SavingsAccount(String nameFirst, String nameLast, int pin)
+    {
+        super(nameFirst, nameLast, pin);
+    }
+
     @Override
     public void getBalance()
     {

@@ -2,6 +2,11 @@ public class savingsAndCheckingAccount extends Account
 {
     private double checkingBalance = INITIAL_BALANCE, savingsBalance = INITIAL_BALANCE;
 
+    public savingsAndCheckingAccount(String nameFirst, String nameLast, int pin)
+    {
+        super(nameFirst, nameLast, pin);
+    }
+
     @Override
     public void getBalance()
     {
@@ -55,7 +60,7 @@ public class savingsAndCheckingAccount extends Account
         System.out.println("Transfer options:\n\t1) Checking to Savings\n\t2) Savings to Checking");
         entryString = input.next();
 
-        System.out.println("Amount to withdraw:\n\t$20\n\t$40\n\t$60\n\t$80\n\t$100");
+        System.out.println("Amount to transfer:\n\t$20\n\t$40\n\t$60\n\t$80\n\t$100");
         entryInt = input.nextInt();
 
         if ( entryString.equals("1") )
