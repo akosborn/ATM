@@ -87,41 +87,26 @@ public abstract class Account implements Serializable
         this.pin = pin;
     }
 
-    public static Account validateLogin() // uses do-while loops to verify submitted account and pin
+    private int getPin()
     {
-        Scanner input = new Scanner(System.in);
-        int entryInt;
-        boolean acctFound = false;
-        boolean pinMatches = false;
-        Account returnAccount = null;
+        return pin;
+    }
 
-        do  // requests account number until a valid account is entered
-        {
-            System.out.print("Account number: ");
-            entryInt = input.nextInt();
+    public static Account validateLogin(int accountNumber, int pin) // uses do-while loops to verify submitted account and pin
+    {
+        Account currentAcct = null;
 
             for (Account i : accounts)
             {
-                if (entryInt == i.accountNumber)
+                if (i.getAccountNumber() == accountNumber)
                 {
-                    returnAccount = i;
-                    acctFound = true;
-
-                    do  // requests pin for above account until correct pin is entered
+                    if (i.getPin() == pin)
                     {
-                        System.out.print("Password: ");
-                        entryInt = input.nextInt();
-                        System.out.println("");
-                        if (entryInt == (i.pin))
-                        {
-                            pinMatches = true;
-                        }
-                    } while (!pinMatches);
+                        currentAcct = i;
+                    }
                 }
             }
-        } while (!acctFound);
-
-        return returnAccount; // returns reference to account object user logged in to
+        return currentAcct; // returns reference to account object user logged in to if valid; otherwise, returns null
     }
 
     public void getBalance()
