@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-// This class serves as an account with both a checking and savings account.
-
-public class Account implements Serializable
+public abstract class Account implements Serializable
 {
     private static final long serialVersionUID = -2491448891466958321L;
     static Scanner input = new Scanner(System.in);
@@ -40,7 +38,6 @@ public class Account implements Serializable
         } catch (IOException ex) { ex.printStackTrace(); }
     }
 
-    @SuppressWarnings("unchecked")
     public static void loadAccounts()
     {
         try
