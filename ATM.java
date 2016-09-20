@@ -52,27 +52,42 @@ public class ATM
     private boolean createOrLogin(boolean validEntry)
     {
         entryString = input.next();
+        String nameFirst, nameLast;
+        int pin;
 
         if ( entryString.equals("1") )
         {
+            Account currentAcct = null;
+
             System.out.print("Enter \"1\" for a checking account, \"2\" for a savings account, or \"3\" for both. \n> ");
             entryString = input.next();
 
+            System.out.print("First name: ");
+            nameFirst = input.next();
+            System.out.print("Last name: ");
+            nameLast = input.next();
+            System.out.print("Set PIN: ");
+            pin = input.nextInt();
+
             if (entryString.equals("1"))
             {
-                CheckingAccount currentCheckingAcct = new CheckingAccount();
-                loggedIn(currentCheckingAcct);
+                currentAcct = new CheckingAccount(nameFirst, nameLast, pin);
             }
             else if (entryString.equals("2"))
             {
-                SavingsAccount currentSavingsAcct = new SavingsAccount();
-                loggedIn(currentSavingsAcct);
+                currentAcct = new SavingsAccount(nameFirst, nameLast, pin);
             }
             else if (entryString.equals("3"))
             {
-                savingsAndCheckingAccount currentSavingsAndCheckingAcct = new savingsAndCheckingAccount();
-                loggedIn(currentSavingsAndCheckingAcct);
+                currentAcct = new savingsAndCheckingAccount(nameFirst, nameLast, pin);
             }
+
+            System.out.println("\nThank you, " + currentAcct.getNameFirst()  + ". Your account (#" + currentAcct.getAccountNumber() + ") has been created.\nYou " +
+                    "will now be required to sign in with your new login information.\n");
+
+            // validateLogin();
+            loggedIn(currentAcct);
+
             validEntry = true;
         }
         else if (entryString.equals("2"))
@@ -92,7 +107,7 @@ public class ATM
     {
         boolean loggedIn = true;
 
-        System.out.println("\nWelcome, " + acct.getFullName() + "! ");
+        System.out.println("Welcome, " + acct.getNameFirst() + " " + acct.getNameLast() + "!");
 
         do // loops until user logs out
         {
