@@ -16,9 +16,9 @@ public class SavingsAccount extends Account
     }
 
     @Override
-    public void getBalance()
+    public double getBalance()
     {
-        System.out.println("\nYour savings balance is $" + savingsBalance + ".\n");
+        return savingsBalance;
     }
 
     @Override

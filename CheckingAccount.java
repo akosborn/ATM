@@ -16,9 +16,9 @@ public class CheckingAccount extends Account
     }
 
     @Override
-    public void getBalance()
+    public double getBalance()
     {
-        System.out.println("\nYour checking balance is $" + checkingBalance + ".\n");
+        return checkingBalance;
     }
 
     public void deposit()

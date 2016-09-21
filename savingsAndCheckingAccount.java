@@ -14,10 +14,9 @@ public class savingsAndCheckingAccount extends Account
     }
 
     @Override
-    public void getBalance()
+    public double getBalance()
     {
-        System.out.println("Your savings balance is $" + savingsBalance + ".");
-        System.out.println("Your checking balance is $" + checkingBalance + ".\n");
+        return savingsBalance + checkingBalance;
     }
 
     @Override

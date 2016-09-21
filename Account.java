@@ -110,9 +110,11 @@ public abstract class Account implements Serializable
         return currentAcct; // returns reference to account object user logged in to if valid; otherwise, returns null
     }
 
-    public void getBalance()
+    public double getBalance()
     {
         // get account balance(s)
+        double balance = 0;
+        return balance;
     }
 
     public void deposit()

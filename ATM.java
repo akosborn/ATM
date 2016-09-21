@@ -81,10 +81,8 @@ public class ATM
                 currentAcct = new savingsAndCheckingAccount(nameFirst, nameLast, pin);
             }
 
-            System.out.println("\nThank you, " + currentAcct.getNameFirst()  + ". Your account (#" + currentAcct.getAccountNumber() + ") has been created.\nYou " +
-                    "will now be required to sign in with your new login information.\n");
-
-            // validateLogin();
+            System.out.println("\nThank you, " + currentAcct.getNameFirst()  + ". Your account (#" +
+                    currentAcct.getAccountNumber() + ") has been created.\n");
             loggedIn(currentAcct);
 
             validEntry = true;
@@ -106,7 +104,7 @@ public class ATM
         }
         else
         {
-            System.out.println("Invalid entry. Enter \"n\" to create a new account or \"e\" to login with with " +
+            System.out.println("Invalid entry. Enter \"1\" to create a new account or \"2\" to login with with " +
                     "an existing account. \n> ");
         }
         return validEntry;
@@ -127,7 +125,7 @@ public class ATM
 
             if (entryInt == 1) // user chooses "View balance"
             {
-                acct.getBalance();
+                System.out.println("Your " + acct.getType() + " balance is $" + acct.getBalance() + ".");
             } else if (entryInt == 2) // user chooses "Deposit"
             {
                 acct.deposit();
