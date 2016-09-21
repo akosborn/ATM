@@ -54,7 +54,7 @@ public class ATM
         entryString = input.next();
         String nameFirst, nameLast;
         int accountNumber, pin;
-        Account currentAcct = null;
+        Account currentAccount = null;
 
         if ( entryString.equals("1") )
         {
@@ -70,20 +70,20 @@ public class ATM
 
             if (entryString.equals("1"))
             {
-                currentAcct = new CheckingAccount(nameFirst, nameLast, pin);
+                currentAccount = new CheckingAccount(nameFirst, nameLast, pin);
             }
             else if (entryString.equals("2"))
             {
-                currentAcct = new SavingsAccount(nameFirst, nameLast, pin);
+                currentAccount = new SavingsAccount(nameFirst, nameLast, pin);
             }
             else if (entryString.equals("3"))
             {
-                currentAcct = new savingsAndCheckingAccount(nameFirst, nameLast, pin);
+                currentAccount = new savingsAndCheckingAccount(nameFirst, nameLast, pin);
             }
 
-            System.out.println("\nThank you, " + currentAcct.getNameFirst()  + ". Your account (#" +
-                    currentAcct.getAccountNumber() + ") has been created.\n");
-            loggedIn(currentAcct);
+            System.out.println("\nThank you, " + currentAccount.getNameFirst()  + ". Your account (#" +
+                    currentAccount.getAccountNumber() + ") has been created.\n");
+            loggedIn(currentAccount);
 
             validEntry = true;
         }
@@ -96,10 +96,10 @@ public class ATM
                 System.out.print("PIN: ");
                 pin = input.nextInt();
                 System.out.println("");
-                currentAcct = Account.validateLogin(accountNumber, pin);
-            } while (currentAcct == null);
+                currentAccount = Account.validateLogin(accountNumber, pin);
+            } while (currentAccount == null);
 
-            loggedIn(currentAcct);
+            loggedIn(currentAccount);
             validEntry = true;
         }
         else
@@ -110,11 +110,11 @@ public class ATM
         return validEntry;
     }
 
-    private void loggedIn(Account acct)
+    private void loggedIn(Account currentAccount)
     {
         boolean loggedIn = true;
 
-        System.out.println("Welcome, " + acct.getNameFirst() + " " + acct.getNameLast() + "!");
+        System.out.println("Welcome, " + currentAccount.getNameFirst() + " " + currentAccount.getNameLast() + "!");
 
         do // loops until user logs out
         {
@@ -125,16 +125,17 @@ public class ATM
 
             if (entryInt == 1) // user chooses "View balance"
             {
-                System.out.println("Your " + acct.getType() + " balance is $" + acct.getBalance() + ".");
+                balanceATM(currentAccount);
             } else if (entryInt == 2) // user chooses "Deposit"
             {
-                acct.deposit();
+                depositATM(currentAccount);
+                balanceATM(currentAccount);
             } else if (entryInt == 3) // user chooses "Withdraw"
             {
-                acct.withdraw();
-            } else if (entryInt == 4 && acct instanceof savingsAndCheckingAccount) // savingsAndCheckingAccount user chooses "Transfer"
+                currentAccount.withdraw();
+            } else if (entryInt == 4 && currentAccount instanceof savingsAndCheckingAccount) // savingsAndCheckingAccount user chooses "Transfer"
             {
-                ( (savingsAndCheckingAccount) acct ).transfer();
+                ( (savingsAndCheckingAccount) currentAccount ).transfer();
             } else if (entryInt == 5) // user chooses "Logout"
             {
                 Account.saveAccounts();
@@ -146,5 +147,30 @@ public class ATM
         } while (loggedIn);
 
         System.out.println("You have been successfully logged out.\n");
+    }
+
+    private void balanceATM(Account currentAccount)
+    {
+        System.out.println("Your " + currentAccount.getType() + " balance is $" + currentAccount.getBalance() + ".\n");
+    }
+
+    private void depositATM(Account currentAccount)
+    {
+        String depositLocation = currentAccount.getType();
+
+        if (currentAccount.getType().equals("savings and checking"))
+        {
+            System.out.print("Enter 1 to deposit to savings or 2 to deposit to checking: ");
+            entryString = input.next();
+
+            if (entryString.equals("1")) { depositLocation = "savings"; }
+            else if (entryString.equals("2")) { depositLocation = "checking"; }
+        }
+
+        System.out.print("Choose an amount to deposit:\n\t$20\n\t$40\n\t$60\n\t$80\n\t$100\n>$");
+        double depositAmount = input.nextInt();
+        currentAccount.deposit(depositAmount, depositLocation);
+
+        System.out.println("Deposit successful!\n");
     }
 }

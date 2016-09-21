@@ -13,7 +13,7 @@ public abstract class Account implements Serializable
     private Random random = new Random();
     final static double INITIAL_BALANCE = 0;
     private static List<Account> accounts = new ArrayList<>();
-    public String type;
+    protected String type;
 
     public Account(String nameFirst, String nameLast, int pin)
     {
@@ -117,7 +117,7 @@ public abstract class Account implements Serializable
         return balance;
     }
 
-    public void deposit()
+    public void deposit(double depositAmount, String depositLocation)
     {
         // deposit money
     }
